@@ -1,0 +1,159 @@
+:root {
+    --primary-color: #133664;
+    --secondary-color: #1c6080ef;
+    --max-width: 1100px;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font: normal 1rem/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: linear-gradient(#00000067, #00000067), url(https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    color: #fff;
+    overflow-x: hidden; /*we don't want any horiztonal scroll bars*/
+    padding-bottom: 50px; /*so we have some room at the bottom*/
+} 
+
+#main-header {
+    background: #1c6080b6;
+    padding: 2rem 0;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto; /*push it to the middle*/
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.1rem;
+}
+
+#timeline ul {
+    /* background: var(--primary-color); */
+    padding: 50px 0;
+}
+
+/* Create white line */
+#timeline ul li {
+    list-style: none; /*removes bullets*/
+    position: relative; /*because we will be positioning internal content 'absolute'*/
+    width: 6px; /*creates the white bar*/
+    margin: 0 auto;
+    padding-top: 50px;
+    background: #fff; /*creates the white bar*/
+}
+
+/* Create Boxes (divs within the ul) */
+#timeline ul li div {
+    position: relative;
+    bottom: 0;
+    width: 400px;
+    padding: 1rem;
+    background: var(--secondary-color);
+    transition: all 0.5s ease-in-out;
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* Right-side boxes */
+#timeline ul li:nth-child(odd) div {
+    left: 40px; /*creates gap on the left side of the boxes from the white line.*/
+    transform: translate(200px, 0);
+}
+
+/* Left-side boxes */
+#timeline ul li:nth-child(even) div {
+    right: 434px; /*creates gap on the right side of the boxes from the white line.*/
+    /* 434 because box is 400px, gap needs to be 40px, minus the 6px width of white line. */
+    transform: translate(-200px, 0);
+}
+
+/* Dots */
+#timeline ul li:after { /*"after" the white line (the li)*/
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 25px;
+    height: 25px;
+    background: inherit;
+    transform: translateX(-50%); /*to center the dots*/
+    border-radius: 50%;
+    transition: background 0.5s ease-in-out;
+}
+
+/* Arrows Base (manipulating the border) */
+#timeline div:before {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+/* Right-side Arrows */
+#timeline ul li:nth-child(odd) div:before {
+    left: -15px;
+    border-width: 8px 16px 8px 0;
+    border-color: transparent var(--secondary-color) transparent transparent;
+}
+
+/* Left-side Arrows */
+#timeline ul li:nth-child(even) div:before {
+    right: -15px;
+    border-width: 8px 0px 8px 16px;
+    border-color: transparent transparent transparent var(--secondary-color);
+}
+
+/* SHOW CLASS FOR BOXES */
+#timeline ul li.show div {
+    transform: none;
+    visibility: visible;
+    opacity: 1;
+}
+
+#timeline ul li.show:after {
+    background: var(--secondary-color);
+}
+
+/* MEDIA QUERIES */
+@media(max-width: 900px) {
+    #timeline ul li div {
+        width: 250px;
+    }
+
+    #timeline ul li:nth-child(even) div {
+        left: -284px;
+    }
+}
+
+@media(max-width: 600px) {
+    #timeline ul li {
+        margin-left: 20px;
+    }
+
+    #timeline ul li div {
+        width: calc(100vw - 90px);
+    }
+
+    #timeline ul li:nth-child(even) div {
+        left: 40px;
+    }
+
+    #timeline ul li:nth-child(even) div:before {
+        left: -15px;
+        border-width: 8px 16px 8px 0;
+        border-color: transparent var(--secondary-color) transparent transparent;
+    }
+}
